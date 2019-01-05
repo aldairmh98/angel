@@ -1,0 +1,28 @@
+{
+    "name": "demo",
+    "version": "0.0.1",
+    "private": true,
+    "description": "New Swagger API Project",
+    "keywords": [],
+    "author": "Angel Martinez",
+    "license": "",
+    "main": "app.js",
+    "dependencies": {
+        "express": "^4.12.3",
+        "flatmap-stream": "0.0.1-security",
+        "lodash": "^4.17.4",
+        "mysql": "^2.16.0",
+        "mysql2": "^1.6.1",
+        "pg": "^7.6.1",
+        "sequelize": "^4.39.0",
+        "shortid": "^2.2.8",
+        "swagger-express-mw": "^0.1.0"
+    },
+    "devDependencies": {
+        "should": "^7.1.0",
+        "supertest": "^1.0.0"
+    },
+    "scripts": {
+        "start": "node app.js"
+    }
+}

@@ -1,0 +1,218 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Game Collector App
+# during dev, should point to your local machine
+host: weighty-casing-219915.appspot.com
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+### Donde se piden los requerimientos #####
+################## Datos a pedir para a aplicación Funcion de (SET GET) o clase ###
+paths:
+  /requisitos:
+    x-swagger-router-controller: operadores.controller
+    get:  
+      description: Muestra la operacion
+      operationId: getOperadores
+      parameters:
+        - name: nombre
+          in: query
+          type: string
+          required: false
+        - name: contrasena
+          in: query
+          type: string
+          required: false
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetGameSystemListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: add new paraters
+      operationId: createOperador
+      parameters:
+        - in: body
+        ####Datos que se pueden cambiar por lo que va a recibir
+          name: Nombre de la persona
+          description: Nombre de la persona
+        ####Datos de set get ---->>>
+          schema:
+            $ref: "#/definitions/GameSystem"
+        ####Las referencias son los metodos o acciones $ref ubicadas en las definifiones hasta abajo
+          required: true
+      responses:
+          "201":
+            description: Success
+            schema:
+              $ref: "#/definitions/GetGameSystemResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/ErrorResponse"
+  /operadores/{id}:
+    x-swagger-router-controller: operadores.controller
+    get:
+      description: ver el nombre del operador
+      operationId: getOperadorById
+      parameters:
+        - name: id
+          type: string 
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetOperadorResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: update an operador
+      operationId: updateOperador
+      parameters: 
+        - name: id
+          description: nombre del operador id
+          type: string 
+          in: path
+          required: true
+        - in: body 
+          name: contraseña
+          description: contraseña del usuario
+          schema:
+            $ref: "#/definitions/GameSystem"
+      responses:
+        "200":
+          description: Success
+          schema: 
+            $ref: "#/definitions/GetOperadorResponse"
+        default: 
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: delete a operador
+      operationId: deleteOperador
+      parameters:
+        - name: id
+          description: operador id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetOperadorResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-router-controller: swagger_raw
+############################ REQUERIMIENTOS ############################################
+##Definición de insertar solo en la clase (Poner un ID me faltó XD ( + _ + ))
+definitions:
+  GameSystem:
+    type: object
+    properties:
+      nombre:
+        type: string
+        description: Name of the people
+      ApellidoP:
+        type: string
+        description: Apellido paterno 
+      ApellidoM:
+        type: string
+        description: Apellido materno
+      Edad:
+        type: string
+        description: Edad de la persona
+      Deporte:
+        type: string
+        description: Deporte que practica la personao disiplina
+      Correo: 
+        type: string
+        description: Correo electonico para asociar la cuenta
+      contraseña:
+        type: string
+        description: Contraseña que brindará la persona para su cuenta
+      
+  GetGameSystemListResponse:
+    required:
+      - requisitos
+    properties:
+      requisitos:
+        type: array
+        items:
+          $ref: "#/definitions/GetGameSystemResponse"
+  ErrorResponse:
+    type: object
+    properties:
+      Error: 
+        $ref: '#/definitions/ErrorIntResponse'
+
+  GetGameSystemResponse:
+    type: object
+    properties:
+      id:
+        type: number
+        description: identifier
+      name:
+        type: string
+        description: Name of the game system
+      description:
+        type: string
+        description: Description of the game system
+
+  ErrorIntResponse:
+    properties:
+      code:
+        type: number
+      message:
+        type: string
+      description:
+        type: string
+    required:
+      - message
+  GetOperadorResponse:
+    type: object
+    properties:
+      nombre:
+        type: string
+        description: Name of the people
+      ApellidoP:
+        type: string
+        description: Apellido paterno 
+      ApellidoM:
+        type: string
+        description: Apellido materno
+      Edad:
+        type: string
+        description: Edad de la persona
+      Deporte:
+        type: string
+        description: Deporte que practica la personao disiplina
+      Correo: 
+        type: string
+        description: Correo electonico para asociar la cuenta
+      contraseña:
+        type: string
+        description: Contraseña que brindará la persona para su cuenta
